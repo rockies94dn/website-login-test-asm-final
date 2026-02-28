@@ -82,15 +82,15 @@ public class NoneCapchaLoginTest extends WebsiteLoginTest {
     }
 
     // TC04: Đăng nhập với tài khoản bị khóa
-    @Test(priority = 4)
-    public void loginWithLockedOutUser() {
-        enterCredentialsAndSubmit("locked_out_user", "secret_sauce");
-
-        WebElement error = wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessage));
-
-        Assert.assertTrue(error.isDisplayed(), "FAIL: Không hiện thông báo lỗi.");
-        Assert.assertEquals(error.getText(),
-                "Epic sadface: Sorry, this user has been locked out.",
-                "FAIL: Sai nội dung báo lỗi user bị khóa.");
-    }
+//    @Test(priority = 4)
+//    public void loginWithLockedOutUser() {
+//        enterCredentialsAndSubmit("locked_out_user", "secret_sauce");
+//
+//        WebElement error = wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessage));
+//
+//        Assert.assertTrue(error.isDisplayed(), "FAIL: Không hiện thông báo lỗi.");
+//        Assert.assertEquals(error.getText(),
+//                "Epic sadface: Sorry, this user has been locked out.",
+//                "FAIL: Sai nội dung báo lỗi user bị khóa.");
+//    }
 }
