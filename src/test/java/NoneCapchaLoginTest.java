@@ -10,6 +10,7 @@ import java.time.Duration;
 
 public class NoneCapchaLoginTest extends WebsiteLoginTest {
 
+    // Lấy các element cần thao tác trên trang
     private final By usernameField = By.id("user-name");
     private final By passwordField = By.id("password");
     private final By loginButton = By.id("login-button");
@@ -24,6 +25,11 @@ public class NoneCapchaLoginTest extends WebsiteLoginTest {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
+    /***
+     * Thao tác nhập tên đăng nhập, mật khẩu và nhấn nút đăng nhập
+     * @param username
+     * @param password
+     */
     private void enterCredentialsAndSubmit(String username, String password) {
         WebElement user = wait.until(ExpectedConditions.visibilityOfElementLocated(usernameField));
         WebElement pass = driver.findElement(passwordField);
@@ -48,7 +54,7 @@ public class NoneCapchaLoginTest extends WebsiteLoginTest {
 
         // Xác nhận URL chuyển sang trang inventory
         boolean isRedirected = wait.until(ExpectedConditions.urlContains("inventory.html"));
-        Assert.assertTrue(isRedirected, "FAIL: Không chuyển hướng sang trang Sản phẩm.");
+        Assert.assertTrue(isRedirected, "FAIL: Không chuyển hướng sang trang sản phẩm.");
 
         // Xác nhận có chữ "Products" trên góc trái màn hình
         WebElement title = wait.until(ExpectedConditions.visibilityOfElementLocated(pageTitle));
@@ -62,10 +68,10 @@ public class NoneCapchaLoginTest extends WebsiteLoginTest {
 
         WebElement error = wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessage));
 
-        Assert.assertTrue(error.isDisplayed(), "FAIL: Không hiện thông báo lỗi.");
+        Assert.assertTrue(error.isDisplayed(), "Failed: Không hiện thông báo lỗi.");
         Assert.assertEquals(error.getText(),
                 "Epic sadface: Username and password do not match any user in this service",
-                "FAIL: Sai nội dung thông báo lỗi.");
+                "Failed: Sai nội dung thông báo lỗi.");
     }
 
     // TC03: Bỏ trống dữ liệu
@@ -75,10 +81,10 @@ public class NoneCapchaLoginTest extends WebsiteLoginTest {
 
         WebElement error = wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessage));
 
-        Assert.assertTrue(error.isDisplayed(), "FAIL: Không hiện thông báo lỗi.");
+        Assert.assertTrue(error.isDisplayed(), "Failed: Không hiện thông báo lỗi.");
         Assert.assertEquals(error.getText(),
                 "Epic sadface: Username is required",
-                "FAIL: Sai nội dung thông báo lỗi khi bỏ trống.");
+                "Failed: Sai nội dung thông báo lỗi khi bỏ trống.");
     }
 
     //     TC04: Đăng nhập với tài khoản bị khóa
@@ -88,10 +94,10 @@ public class NoneCapchaLoginTest extends WebsiteLoginTest {
 
         WebElement error = wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessage));
 
-        Assert.assertTrue(error.isDisplayed(), "FAIL: Không hiện thông báo lỗi.");
+        Assert.assertTrue(error.isDisplayed(), "Failed: Không hiện thông báo lỗi.");
         Assert.assertEquals(error.getText(),
                 "Epic sadface: Sorry, this user has been locked out.",
-                "FAIL: Sai nội dung báo lỗi user bị khóa.");
+                "Failed: Sai nội dung báo lỗi user bị khóa.");
     }
 
     // TC05: Nhập Username nhưng bỏ trống Password
@@ -102,10 +108,10 @@ public class NoneCapchaLoginTest extends WebsiteLoginTest {
 
         WebElement error = wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessage));
 
-        Assert.assertTrue(error.isDisplayed(), "FAIL: Không hiện thông báo lỗi.");
+        Assert.assertTrue(error.isDisplayed(), "Failed: Không hiện thông báo lỗi.");
         Assert.assertEquals(error.getText(),
                 "Epic sadface: Password is required",
-                "FAIL: Nội dung lỗi không đúng khi thiếu Password.");
+                "Failed: Nội dung lỗi không đúng khi thiếu Password.");
     }
 
     // TC06: Kiểm tra hiệu năng
@@ -118,14 +124,14 @@ public class NoneCapchaLoginTest extends WebsiteLoginTest {
         long endTime = System.currentTimeMillis();
         long durationInSeconds = (endTime - startTime) / 1000;
 
-        Assert.assertTrue(isRedirected, "FAIL: Đăng nhập không thành công sau khi chờ đợi.");
+        Assert.assertTrue(isRedirected, "Failed: Đăng nhập không thành công sau khi chờ đợi.");
 
         // Xác nhận trang web bị delay ít nhất 5 giây
         System.out.println("Thời gian đăng nhập thực tế: " + durationInSeconds + " giây.");
         Assert.assertTrue(durationInSeconds >= 5,
-                "FAIL: Thời gian phản hồi quá nhanh (" + durationInSeconds + "s), không đúng với thiết kế của user này.");
+                "Failed: Thời gian phản hồi quá nhanh (" + durationInSeconds + "s), không đúng với thiết kế của user này.");
         // Xác nhận tiêu đề trang xuất hiện
         WebElement title = wait.until(ExpectedConditions.visibilityOfElementLocated(pageTitle));
-        Assert.assertEquals(title.getText(), "Products", "FAIL: Sai tiêu đề trang sau khi login chậm.");
+        Assert.assertEquals(title.getText(), "Products", "Failed: Sai tiêu đề trang sau khi login chậm.");
     }
 }
